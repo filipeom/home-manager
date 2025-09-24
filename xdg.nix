@@ -20,6 +20,7 @@
 
   # Some config files we need
   configFile = {
+    "tmux/tmux.conf".source = ./config/tmux/tmux.conf;
     "kitty/kitty.conf".source = ./config/kitty/kitty.conf;
     "kitty/dayfox.conf".source = ./config/kitty/dayfox.conf;
     # TODO: Find a better way to do this
