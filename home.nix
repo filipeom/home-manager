@@ -30,6 +30,7 @@
   programs = {
     git = import ./programs/git.nix { inherit config pkgs lib; };
     zsh = import ./programs/zsh.nix { inherit config pkgs lib; };
+    tmux = import ./programs/tmux.nix { inherit config pkgs lib; };
   };
 
   home.sessionPath = [

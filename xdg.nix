@@ -5,6 +5,7 @@
   cacheHome = "${config.home.homeDirectory}/.cache";
   dataHome = "${config.home.homeDirectory}/.local/share";
   stateHome = "${config.home.homeDirectory}/.local/state";
+
   userDirs = {
     enable = true;
     desktop = "${config.home.homeDirectory}/resources";
@@ -15,5 +16,11 @@
     publicShare = "${config.home.homeDirectory}/";
     templates = "${config.home.homeDirectory}/resources/templates";
     videos = "${config.home.homeDirectory}/";
+  };
+
+  # Some config files we need
+  configFile = {
+    "kitty/kitty.conf".source = ./config/kitty/kitty.conf;
+    "kitty/dayfox.conf".source = ./config/kitty/dayfox.conf;
   };
 }
