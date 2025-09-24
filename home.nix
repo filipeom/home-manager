@@ -5,9 +5,9 @@
       cowsay
       git
       home-manager
+      neovim
       opam
       oh-my-zsh
-      neovim
     ];
 
     username = "filipe";

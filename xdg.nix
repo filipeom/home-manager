@@ -22,5 +22,20 @@
   configFile = {
     "kitty/kitty.conf".source = ./config/kitty/kitty.conf;
     "kitty/dayfox.conf".source = ./config/kitty/dayfox.conf;
+    # TODO: Find a better way to do this
+    "nvim/init.lua".source = ./config/nvim/init.lua;
+    "nvim/lua/filipeom/init.lua".source = ./config/nvim/lua/filipeom/init.lua;
+    "nvim/lua/filipeom/cmd.lua".source = ./config/nvim/lua/filipeom/cmd.lua;
+    "nvim/lua/filipeom/plugins.lua".source = ./config/nvim/lua/filipeom/plugins.lua;
+    "nvim/lua/filipeom/remap.lua".source = ./config/nvim/lua/filipeom/remap.lua;
+    "nvim/lua/filipeom/set.lua".source = ./config/nvim/lua/filipeom/set.lua;
+    "nvim/after/plugin/barbar.lua".source = ./config/nvim/after/plugin/barbar.lua;
+    "nvim/after/plugin/cmp.lua".source = ./config/nvim/after/plugin/cmp.lua;
+    "nvim/after/plugin/colors.lua".source = ./config/nvim/after/plugin/colors.lua;
+    "nvim/after/plugin/fugitive.lua".source = ./config/nvim/after/plugin/fugitive.lua;
+    "nvim/after/plugin/lsp.lua".source = ./config/nvim/after/plugin/lsp.lua;
+    "nvim/after/plugin/telescope.lua".source = ./config/nvim/after/plugin/telescope.lua;
+    "nvim/after/plugin/treesitter.lua".source = ./config/nvim/after/plugin/treesitter.lua;
+    "nvim/after/plugin/vimtex.lua".source = ./config/nvim/after/plugin/vimtex.lua;
   };
 }
