@@ -17,7 +17,8 @@
   };
 
   # XDG
-  xdg = {
+  xdg = import ./xdg.nix { inherit config pkgs lib; };
+
     enable = true;
     configHome = "${config.home.homeDirectory}/.config";
     cacheHome = "${config.home.homeDirectory}/.cache";
