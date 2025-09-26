@@ -17,9 +17,9 @@
       pkgs = import nixpkgs { inherit system; };
     in {
       homeConfigurations = {
-        filipe = home-manager.lib.homeManagerConfiguration {
+        t14 = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home.nix ];
+          modules = [ hosts/t14/home.nix ];
         };
       };
     };

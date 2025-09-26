@@ -2,12 +2,7 @@
 {
  home = {
     packages = with pkgs; [
-      cowsay
-      git
       home-manager
-      neovim
-      opam
-      oh-my-zsh
     ];
 
     username = "filipe";
@@ -28,8 +23,8 @@
 
   # programs
   programs = {
-    git = import ./programs/git.nix { inherit config pkgs lib; };
-    zsh = import ./programs/zsh.nix { inherit config pkgs lib; };
+    git = import ../../modules/git.nix { inherit config pkgs lib; };
+    zsh = import ../../modules/zsh.nix { inherit config pkgs lib; };
   };
 
   home.sessionPath = [
