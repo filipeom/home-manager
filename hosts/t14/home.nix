@@ -37,7 +37,9 @@
     NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
     NODE_REPL_HISTORY = "${config.xdg.dataHome}/node_repl_history";
     OPAMROOT = "${config.xdg.dataHome}/opam";
-    CARGO_HOME = "${config.xdg.dataHome}/cargo";
     XINITRC = "${config.xdg.configHome}/X11/xinitrc";
+    # Rust
+    CARGO_HOME = "${config.xdg.dataHome}/cargo";
+    RUSTUP_HOME="${config.xdg.dataHome}/rustup";
   };
 }
