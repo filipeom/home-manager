@@ -18,6 +18,8 @@
   };
   initContent = ''
     bindkey -s ^f "tmux-sessionizer\n"
+
+    eval $(opam env)
     '';
 
 }
