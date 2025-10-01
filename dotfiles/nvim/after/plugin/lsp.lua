@@ -40,6 +40,7 @@ lsp.setup_servers(
   , 'texlab'
   , 'lua_ls'
   , 'rust_analyzer'
+  , 'tinymist'
   })
 
 lsp.setup()
