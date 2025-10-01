@@ -23,6 +23,7 @@
     "tmux/tmux.conf".source = ../../dotfiles/tmux/tmux.conf;
     "kitty/kitty.conf".source = ../../dotfiles/kitty/kitty.conf;
     "kitty/dayfox.conf".source = ../../dotfiles/kitty/dayfox.conf;
+    "zathura/zathurarc".source = ../../dotfiles/zathura/zathura.conf;
     # TODO: Find a better way to do this
     "nvim/init.lua".source = ../../dotfiles/nvim/init.lua;
     "nvim/lua/filipeom/init.lua".source = ../../dotfiles/nvim/lua/filipeom/init.lua;
@@ -38,5 +39,9 @@
     "nvim/after/plugin/telescope.lua".source = ../../dotfiles/nvim/after/plugin/telescope.lua;
     "nvim/after/plugin/treesitter.lua".source = ../../dotfiles/nvim/after/plugin/treesitter.lua;
     "nvim/after/plugin/vimtex.lua".source = ../../dotfiles/nvim/after/plugin/vimtex.lua;
+  };
+
+  mimeApps.defaultApplications = {
+    "application/pdf" = "org.pwmt.zathura.desktop";
   };
 }
