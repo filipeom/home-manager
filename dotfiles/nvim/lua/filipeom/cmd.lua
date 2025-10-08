@@ -1,11 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
 
--- On entering a buffer go to last known cursor position
--- autocmd("BufWinEnter", {
---   pattern = { "*" },
---   command = 'silent! normal! g`"',
--- })
-
 -- On entering a buffer restore last view
 autocmd("BufWinEnter", {
   pattern = { "*.md" },
@@ -19,9 +13,14 @@ autocmd("BufWinLeave", {
 })
 
 -- Remove whitespace before saving file
-autocmd({ "BufWritePre" }, {
-  pattern = { "*" },
-  command = [[%s/\s\+$//e]],
+autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function()
+    -- Skip .eml files
+    if vim.bo.filetype ~= "mail" then
+      vim.cmd([[%s/\s\+$//e]])
+    end
+  end,
 })
 
 -- Invoke dune on 'ocaml' filetypes
