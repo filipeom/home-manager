@@ -15,6 +15,7 @@
     e = "$EDITOR";
     vi = "nvim";
     vim = "nvim";
+    ls = "ls --color=auto --group-directories-first";
   };
   initContent = ''
     bindkey -s ^f "tmux-sessionizer\n"
