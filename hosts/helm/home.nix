@@ -118,7 +118,11 @@
     configType = "hyprlang";
     package = pkgs.hyprland;
     settings = {
-      monitor = ",highres@highrr,0x0,1";
+      monitor = [
+        "eDP-1,highres@highrr,0x0,1"
+        # Fallback for any unexpected extra monitors
+        ",preferred,auto,auto"
+      ];
 
       "$mod" = "SUPER";
       "$terminal" = "kitty";
