@@ -8,9 +8,14 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, nixgl, ... }:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -30,6 +35,11 @@
           inherit pkgs;
           modules = [ hosts/anchor-01/home.nix ];
         };
+        cflinux = home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgs.extend nixgl.overlays.default;
+          modules = [ hosts/cflinux/home.nix ];
+        };
+
       };
 
       nixosConfigurations = {
