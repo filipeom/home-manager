@@ -42,6 +42,8 @@ in
     wofi
     nerd-fonts.jetbrains-mono
     mako
+
+    pavucontrol
   ];
 
   imports = [
@@ -91,7 +93,6 @@ in
   };
 
   programs.neovim.enable = true;
-  programs.waybar.enable = true;
 
   programs.kitty = {
     enable = true;
@@ -102,6 +103,7 @@ in
     enable = true;
     configType = "hyprlang";
     package = nixGLWrap pkgs.hyprland "Hyprland";
+    portalPackage = null;
     settings = {
       monitor = [
         "eDP-1,highres@highrr,0x0,1.25"
@@ -120,6 +122,9 @@ in
       ];
 
       exec-once = [
+        "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+        "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+        "systemctl --user restart xdg-desktop-portal-hyprland xdg-desktop-portal"
         "systemctl --user start hypridle hyprsunset hyprpaper mako"
       ];
 
