@@ -1,9 +1,210 @@
 { lib, pkgs, config, ... }:
 {
-  Unit = {
-    Description = "Hyprland compositor session";
-    BindsTo = [ "graphical-session.target" ];
-    Wants = [ "graphical-session-pre.target" ];
-    After = [ "graphical-session-pre.target" ];
+  options.my.hyprland = {
+    enable = lib.mkEnableOption "Hyprland desktop environment and associated services";
+  };
+
+  imports = [
+    ./hyprsunset.nix
+    ./hyprpaper.nix
+  ];
+
+  config = lib.mkIf config.my.hyprland.enable {
+    home.packages = with pkgs; [
+      waybar
+      brightnessctl
+      hypridle
+      hyprlock
+      hyprshot
+      wofi
+    ];
+
+    wayland.windowManager.hyprland = {
+      enable = true;
+      configType = "hyprlang";
+      package = lib.mkDefault pkgs.hyprland;
+      settings = {
+        "$mod" = "SUPER";
+        "$terminal" = "kitty";
+        "$fileManager" = "dolphin";
+        "$menu" = "wofi --show drun";
+
+        env = [
+          "XDG_CURRENT_DESKTOP,Hyprland"
+          "XDG_SESSION_TYPE,wayland"
+          "XDG_SESSION_DESKTOP,Hyprland"
+        ];
+
+        exec-once = [
+          "systemctl --user start hypridle hyprsunset hyprpaper mako"
+        ];
+
+        general = {
+          gaps_in = 5;
+          gaps_out = 10;
+
+          border_size = 2;
+
+          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+          "col.inactive_border" = "rgba(595959aa)";
+
+          resize_on_border = false;
+          allow_tearing = false;
+          layout = "master";
+        };
+
+        decoration = {
+          rounding = 10;
+          rounding_power = 2;
+
+          active_opacity = 1.0;
+          inactive_opacity = 1.0;
+        };
+
+        master = {
+          new_status = "master";
+          new_on_top = true;
+          orientation = "left";
+          mfact = 0.55;
+        };
+
+        misc = {
+          force_default_wallpaper = 1;
+          disable_hyprland_logo = true;
+          allow_session_lock_restore = true;
+        };
+
+        input = {
+          kb_layout = lib.mkDefault "us,pt";
+          kb_variant = lib.mkDefault ",";
+          kb_model = "";
+          kb_options = "grp:alt_shift_toggle,ctrl:nocaps";
+          kb_rules = "";
+
+          follow_mouse = 1;
+
+          repeat_rate = 70;
+          repeat_delay = 290;
+        };
+
+        bind = [
+          "$mod, P, exec, $menu"
+          "$mod SHIFT, RETURN, exec, $terminal"
+          "$mod SHIFT, C, killactive,"
+          "$mod SHIFT, Q, exit,"
+          "$mod, RETURN, layoutmsg, swapwithmaster"
+          "$mod, E, exec, $fileManager"
+          "$mod, F, togglefloating,"
+          "$mod SHIFT, F, fullscreen,"
+          "$mod, X, exec, hyprlock"
+
+          # Move focus with mainMod + hjkl
+          "$mod, h, movefocus, l"
+          "$mod, l, movefocus, r"
+          "$mod, j, movefocus, d"
+          "$mod, k, movefocus, u"
+
+          # Move window with mainMod + SHIFT + hjkl
+          "$mod SHIFT, h, movewindow, l"
+          "$mod SHIFT, l, movewindow, r"
+          "$mod SHIFT, j, movewindow, d"
+          "$mod SHIFT, k, movewindow, u"
+
+          # Resize with mainMod + ALT + hjkl
+          "ALT $mod, h, resizeactive, -40 0"
+          "ALT $mod, l, resizeactive, 40 0"
+          "ALT $mod, j, resizeactive, 0 40"
+          "ALT $mod, k, resizeactive, 0 -40"
+
+          "$mod, comma, focusmonitor, +1"
+          "$mod, period, focusmonitor, -1"
+
+          # Switch workspaces with mainMod + [0-9]
+          "$mod, 1, focusworkspaceoncurrentmonitor, 1"
+          "$mod, 2, focusworkspaceoncurrentmonitor, 2"
+          "$mod, 3, focusworkspaceoncurrentmonitor, 3"
+          "$mod, 4, focusworkspaceoncurrentmonitor, 4"
+          "$mod, 5, focusworkspaceoncurrentmonitor, 5"
+          "$mod, 6, focusworkspaceoncurrentmonitor, 6"
+          "$mod, 7, focusworkspaceoncurrentmonitor, 7"
+          "$mod, 8, focusworkspaceoncurrentmonitor, 8"
+          "$mod, 9, focusworkspaceoncurrentmonitor, 9"
+          "$mod, 0, focusworkspaceoncurrentmonitor, 10"
+
+           # Move active window to a workspace with mainMod + SHIFT + [0-9]
+          "$mod SHIFT, 1, movetoworkspace, 1"
+          "$mod SHIFT, 2, movetoworkspace, 2"
+          "$mod SHIFT, 3, movetoworkspace, 3"
+          "$mod SHIFT, 4, movetoworkspace, 4"
+          "$mod SHIFT, 5, movetoworkspace, 5"
+          "$mod SHIFT, 6, movetoworkspace, 6"
+          "$mod SHIFT, 7, movetoworkspace, 7"
+          "$mod SHIFT, 8, movetoworkspace, 8"
+          "$mod SHIFT, 9, movetoworkspace, 9"
+          "$mod SHIFT, 0, movetoworkspace, 10"
+
+          # Example special workspace (scratchpad)
+          "$mod, S, togglespecialworkspace, magic"
+          "$mod SHIFT, S, movetoworkspace, special:magic"
+
+          # Scroll through existing workspaces with mainMod + scroll
+          "$mod, mouse_down, workspace, e+1"
+          "$mod, mouse_up, workspace, e-1"
+
+          # Screenshots
+          ", PRINT, exec, hyprshot -m output"
+          "$mod, PRINT, exec, hyprshot -m region"
+        ];
+
+        bindel = [
+          ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+          ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+          ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
+          ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+        ];
+
+        bindm = [
+          "$mod, mouse:272, movewindow"
+          "$mod, mouse:273, resizewindow"
+        ];
+      };
+    };
+
+    systemd.user.services.waybar = import ./waybar.nix { inherit config pkgs lib; };
+
+    services.hypridle = {
+      enable = true;
+      settings = {
+        general = {
+          lock_cmd = "hyprlock";
+          before_sleep_cmd = "loginctl lock-session";
+        };
+        listener = [
+          {
+            timeout = 300;
+            on-timeout = "loginctl lock-session";
+          }
+          {
+            timeout = 900;
+            on-timeout = "systemctl suspend";
+          }
+        ];
+      };
+    };
+
+    services.hyprpaper.enable = true;
+    services.hyprsunset.enable = true;
+
+    services.mako = {
+      enable = true;
+      settings = {
+        default-timeout = 5000; # Time in milliseconds
+        border-radius = 5;
+        background-color = "#282a36ee";
+        border-color = "#bd93f9";
+      };
+    };
   };
 }
