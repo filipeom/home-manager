@@ -32,6 +32,7 @@
       htop
       keepassxc
       nextcloud-client
+      networkmanagerapplet
 
       # Office stuff
       libreoffice-fresh
@@ -58,6 +59,7 @@
     # Services
     ../../modules/services/hyprland.nix
     ./xdg.nix
+    ./gtk.nix
   ];
 
   xdg.enable = true;
@@ -118,6 +120,7 @@
 
     exec-once = [
       "nextcloud"
+      "nm-applet"
     ];
   };
 

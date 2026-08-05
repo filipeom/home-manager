@@ -17,6 +17,12 @@
       hyprlock
       hyprshot
       wofi
+      swaynotificationcenter
+      swayosd
+      inter
+      gnome-backgrounds
+      gsimplecal
+      thunar
     ];
 
     wayland.windowManager.hyprland = {
@@ -26,7 +32,7 @@
       settings = {
         "$mod" = "SUPER";
         "$terminal" = "kitty";
-        "$fileManager" = "dolphin";
+        "$fileManager" = "thunar";
         "$menu" = "wofi --show drun";
 
         env = [
@@ -36,7 +42,7 @@
         ];
 
         exec-once = [
-          "systemctl --user start hypridle hyprsunset hyprpaper mako"
+          "systemctl --user start hypridle hyprsunset hyprpaper swaync swayosd"
         ];
 
         general = {
@@ -59,6 +65,11 @@
 
           active_opacity = 1.0;
           inactive_opacity = 1.0;
+
+          "blur:enabled" = true;
+          "blur:size" = 5;
+          "blur:passes" = 2;
+          "blur:new_optimizations" = true;
         };
 
         master = {
@@ -157,17 +168,28 @@
         ];
 
         bindel = [
-          ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-          ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-          ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-          ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
-          ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+          ",XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise"
+          ",XF86AudioLowerVolume, exec, swayosd-client --output-volume lower"
+          ",XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
+          ",XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle"
+          ",XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
+          ",XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
         ];
 
         bindm = [
           "$mod, mouse:272, movewindow"
           "$mod, mouse:273, resizewindow"
+        ];
+
+        windowrule = [
+          "match:class ^(pavucontrol)$, float on"
+          "match:class ^(blueman-manager)$, float on"
+          "match:class ^(xdg-desktop-portal-gtk)$, float on"
+          "match:class ^(polkit-kde-authentication-agent-1)$, float on"
+          "match:class ^(pavucontrol)$, size 50% 60%"
+          "match:class ^(blueman-manager)$, size 50% 60%"
+          "match:class ^(pavucontrol)$, center on"
+          "match:class ^(blueman-manager)$, center on"
         ];
       };
     };
@@ -197,13 +219,80 @@
     services.hyprpaper.enable = true;
     services.hyprsunset.enable = true;
 
-    services.mako = {
+    services.swaync = {
       enable = true;
+      style = ../../dotfiles/swaync/style.css;
       settings = {
-        default-timeout = 5000; # Time in milliseconds
-        border-radius = 5;
-        background-color = "#282a36ee";
-        border-color = "#bd93f9";
+        positionX = "right";
+        positionY = "top";
+        layer = "overlay";
+        control-center-layer = "top";
+        layer-shell = true;
+        cssPriority = "application";
+        control-center-margin-top = 8;
+        control-center-margin-bottom = 8;
+        control-center-margin-right = 8;
+        control-center-margin-left = 0;
+        notification-window-width = 400;
+        notification-icon-size = 48;
+        notification-body-image-height = 100;
+        notification-body-image-width = 200;
+        timeout = 5;
+        timeout-low = 3;
+        timeout-critical = 0;
+        fit-to-screen = true;
+        relative-timestamps = true;
+        image-visibility = "when-available";
+        transition-time = 200;
+        hide-on-clear = false;
+        hide-on-action = true;
+        script-fail-notify = true;
+        widgets = [
+          "title"
+          "dnd"
+          "notifications"
+          "buttons-grid"
+        ];
+        widget-config = {
+          title = {
+            text = "Notifications";
+            clear-all-button = true;
+            button-text = "Clear All";
+          };
+          dnd = {
+            text = "Do Not Disturb";
+          };
+          "buttons-grid" = {
+            actions = [
+              {
+                label = "Calendar";
+                command = "gsimplecal";
+              }
+            ];
+          };
+        };
+      };
+    };
+
+    services.swayosd = {
+      enable = true;
+      topMargin = 0.92;
+    };
+
+    programs.wofi = {
+      enable = true;
+      style = ../../dotfiles/wofi/style.css;
+      settings = {
+        show = "drun";
+        width = 600;
+        height = 400;
+        location = "center";
+        allow_images = true;
+        allow_markup = true;
+        prompt = "Search...";
+        insensitive = true;
+        sort_order = "default";
+        no_actions = true;
       };
     };
   };

@@ -61,6 +61,7 @@
     # Services
     ../../modules/services/hyprland.nix
     ./xdg.nix
+    ./gtk.nix
   ];
 
   # XDG

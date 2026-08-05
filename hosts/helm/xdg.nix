@@ -27,6 +27,7 @@
     configFile = {
       "tmux/tmux.conf".source = ../../dotfiles/tmux/tmux.conf;
       "waybar".source = ../../dotfiles/waybar;
+      "hypr/hyprlock.conf".source = ../../dotfiles/hypr/hyprlock.conf;
     };
 
     # Enable screensharing

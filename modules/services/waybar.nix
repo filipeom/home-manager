@@ -4,6 +4,9 @@
     Description="Waybar - status bar for Wayland";
     PartOf="hyprland-session.target";
     After="hyprland-session.target";
+    X-Restart-Triggers = [
+      "${config.xdg.configFile."waybar".source}"
+    ];
   };
   Service = {
     ExecStart="${pkgs.waybar}/bin/waybar";
