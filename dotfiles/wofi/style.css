@@ -1,13 +1,20 @@
+@define-color background rgba(0, 0, 0, 0.85);
+@define-color foreground #ffffff;
+@define-color accent #00C853;
+
 * {
-  font-family: "Inter", "JetBrainsMono Nerd Font", FontAwesome, sans-serif;
-  font-size: 15px;
+  font-family: "JetBrains Mono Nerd Font";
+  font-size: 12px;
+  font-weight: bold;
+  transition: all 0.3s ease-out;
 }
 
 window {
   margin: 0px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: @background;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 1);
 }
 
 #input {
@@ -15,13 +22,13 @@ window {
   padding: 8px 14px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
-  color: #ffffff;
-  background-color: rgba(64, 64, 64, 0.6);
+  color: @foreground;
+  background-color: rgba(255, 255, 255, 0.06);
 }
 
 #input:focus {
   box-shadow: none;
-  border: 1px solid rgba(51, 204, 255, 0.4);
+  border: 1px solid rgba(0, 200, 83, 0.4);
 }
 
 #inner-box {
@@ -39,7 +46,7 @@ window {
 
 #text {
   margin-left: 10px;
-  color: #ffffff;
+  color: @foreground;
 }
 
 #entry {
@@ -49,11 +56,11 @@ window {
 }
 
 #entry:selected {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(0, 200, 83, 0.15);
 }
 
 #entry:selected #text {
-  color: #ffffff;
+  color: @foreground;
   font-weight: bold;
 }
 
@@ -62,5 +69,5 @@ window {
 }
 
 #text:selected {
-  color: #ffffff;
+  color: @foreground;
 }
