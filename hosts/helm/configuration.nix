@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
@@ -11,6 +11,8 @@
     ];
 
   hardware.bluetooth.enable = true;
+
+  services.fprintd.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -80,6 +82,8 @@
     packages = with pkgs; [];
   };
 
+  security.pam.services.hyprlock.fprintAuth = true;
+
   # Annoying sudo password
   security.sudo.extraRules = [
     {
@@ -144,13 +148,7 @@
   ];
 
   # Enable display manager
-  services.displayManager.ly = {
-    enable = true;
-    settings = {
-      animation = "matrix";
-      lang = "pt";
-    };
-  };
+  services.displayManager.gdm.enable = true;
 
   services.cloudflare-warp.enable = true;
 
