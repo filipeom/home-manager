@@ -195,13 +195,7 @@
   # List services that you want to enable:
 
   # Enable display manager
-  services.displayManager.ly = {
-    enable = true;
-    settings = {
-      animation = "matrix";
-      lang = "pt";
-    };
-  };
+  services.displayManager.gdm.enable = true;
 
   services.cloudflare-warp.enable = true;
 
