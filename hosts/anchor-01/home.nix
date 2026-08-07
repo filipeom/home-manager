@@ -15,6 +15,7 @@
     ../../modules/programs/git.nix
     ../../modules/programs/zsh.nix
     ../../modules/programs/neovim.nix
+    ../../modules/programs/wakeonlan.nix
     ./xdg.nix
   ];
 
@@ -25,6 +26,7 @@
   programs.git.enable = true;
   programs.zsh.enable = true;
   programs.neovim.enable = true;
+  programs.wakeonlan.enable = true;
 
   home.sessionVariables = {
     EDITOR = "nvim";

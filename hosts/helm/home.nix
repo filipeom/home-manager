@@ -56,6 +56,7 @@
     ../../modules/programs/neovim.nix
     ../../modules/programs/kitty.nix
     ../../modules/programs/tmux-sessionizer.nix
+    ../../modules/programs/wakeonlan.nix
     # Services
     ../../modules/services/hyprland.nix
     ./xdg.nix
@@ -90,6 +91,7 @@
 
   programs.neovim.enable = true;
   programs.kitty.enable = true;
+  programs.wakeonlan.enable = true;
 
   programs.waybar.enable = true;
 
