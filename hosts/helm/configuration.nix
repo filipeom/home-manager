@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/services/power-tune.nix
     ];
 
   hardware.bluetooth.enable = true;
@@ -179,6 +180,19 @@
 
   # Enable Bluetooth daemon
   services.blueman.enable = true;
+
+  # Power management for battery life
+  services.tlp = {
+    enable = true;
+    settings = {
+      PLATFORM_PROFILE_ON_BAT = "low-power";
+      CPU_SCALING_MAX_FREQ_ON_BAT = 2400000;
+      CPU_SCALING_MAX_FREQ_ON_AC = 4200000;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+    };
+  };
+
+  my.power-tune.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
