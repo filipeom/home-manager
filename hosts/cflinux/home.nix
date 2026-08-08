@@ -69,6 +69,7 @@
       model = "google/gemini-3.6-flash";
       autoupdate = false;
       permission = "allow";
+      lsp = true;
     };
   };
 

@@ -1,5 +1,11 @@
 { lib, pkgs, config, ... }:
 {
+  fonts.fontconfig.enable = true;
+
+  home.packages = [
+    pkgs.nerd-fonts.jetbrains-mono
+  ];
+
   programs.kitty = {
     settings = {
       font_family = "JetBrainsMono Nerd Font";
@@ -10,6 +16,8 @@
       font_size = 14;
       force_ltr = "no";
       disable_ligatures = "never";
+
+      notify_on_cmd_finish = "never";
 
       box_drawing_scale = "0.001, 1, 1.5, 2";
       text_composition_strategy = "1.8 5";
