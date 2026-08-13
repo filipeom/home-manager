@@ -194,6 +194,20 @@
 
   my.power-tune.enable = true;
 
+  # Swap for hibernation (S4)
+  swapDevices = [
+    { device = "/swapfile"; size = 24576; }
+  ];
+
+  # Resume from swapfile for hibernation
+  boot.resumeDevice = "/dev/nvme0n1p2";
+  boot.kernelParams = [ "resume_offset=33781760" ];
+
+  # Suspend-then-hibernate: sleep now, hibernate after 2h of sleep
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "7200";
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
