@@ -13,7 +13,10 @@
 
   hardware.bluetooth.enable = true;
 
-  services.fprintd.enable = true;
+  # Swap for hibernation (S4)
+  swapDevices = [
+    { device = "/swapfile"; size = 24576; }
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -21,6 +24,10 @@
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # Resume from swapfile for hibernation
+  boot.resumeDevice = "/dev/nvme0n1p2";
+  boot.kernelParams = [ "resume_offset=33781760" ];
 
   networking.hostName = "helm"; # Define your hostname.
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
@@ -192,16 +199,9 @@
     };
   };
 
+  services.fprintd.enable = true;
+
   my.power-tune.enable = true;
-
-  # Swap for hibernation (S4)
-  swapDevices = [
-    { device = "/swapfile"; size = 24576; }
-  ];
-
-  # Resume from swapfile for hibernation
-  boot.resumeDevice = "/dev/nvme0n1p2";
-  boot.kernelParams = [ "resume_offset=33781760" ];
 
   # Suspend-then-hibernate: sleep now, hibernate after 2h of sleep
   systemd.sleep.settings.Sleep = {

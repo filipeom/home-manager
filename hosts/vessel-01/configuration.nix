@@ -28,9 +28,16 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  swapDevices = [
+    { device = "/swapfile"; size = 32768; }
+  ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.resumeDevice = "/dev/sda2";
+  boot.kernelParams = [ "resume_offset=229838848" ];
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
     v4l2loopback
@@ -241,6 +248,11 @@
   services.ollama = {
     enable = true;
     package = pkgs.ollama-cuda;
+  };
+
+  # Suspend-then-hibernate: sleep now, hibernate after 2h of sleep
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "7200";
   };
 
   # Open ports in the firewall.
