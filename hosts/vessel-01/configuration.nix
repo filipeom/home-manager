@@ -36,6 +36,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   boot.resumeDevice = "/dev/sda2";
   boot.kernelParams = [ "resume_offset=229838848" ];
 
