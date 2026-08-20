@@ -66,7 +66,7 @@
   programs.opencode = {
     enable = true;
     settings = {
-      model = "google/gemini-3.6-flash";
+      model = "google/gemini-flash-latest";
       autoupdate = false;
       permission = "allow";
       lsp = true;
