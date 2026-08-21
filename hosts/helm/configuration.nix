@@ -208,6 +208,46 @@
     HibernateDelaySec = "7200";
   };
 
+  # Lid switch: when closed, drop the internal display so only the external
+  # monitor stays active (instead of logind suspending or leaving both outputs on).
+  services.logind.settings.Login.HandleLidSwitch = "ignore";
+
+  services.acpid = {
+    enable = true;
+    lidEventCommands = ''
+      as_user() {
+        ${pkgs.util-linux}/bin/runuser -u filipe -- env XDG_RUNTIME_DIR=/run/user/1000 "$@"
+      }
+
+      run_hyprctl() {
+        local sig
+        sig=$(ls /run/user/1000/hypr/ 2>/dev/null | grep -v -E '\.' | head -1)
+        [ -n "$sig" ] || return 0
+        as_user env HYPRLAND_INSTANCE_SIGNATURE="$sig" \
+          ${pkgs.hyprland}/bin/hyprctl "$@"
+      }
+
+      external_present() {
+        run_hyprctl monitors all | grep -E '^Monitor ' | grep -vq 'eDP-1'
+      }
+
+      case "$1" in
+        *close*)
+          if external_present; then
+            run_hyprctl keyword monitor eDP-1, disable
+            as_user ${pkgs.systemd}/bin/systemctl --user restart waybar
+          else
+            ${pkgs.systemd}/bin/loginctl suspend
+          fi
+          ;;
+        *open*)
+          run_hyprctl keyword monitor eDP-1, preferred, 0x0, 1
+          as_user ${pkgs.systemd}/bin/systemctl --user restart waybar
+          ;;
+      esac
+    '';
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
