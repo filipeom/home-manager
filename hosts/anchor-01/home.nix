@@ -16,6 +16,7 @@
     ../../modules/programs/zsh.nix
     ../../modules/programs/neovim.nix
     ../../modules/programs/wakeonlan.nix
+    ../../modules/programs/tmux-sessionizer.nix
     ./xdg.nix
   ];
 
@@ -24,9 +25,23 @@
 
   # programs
   programs.git.enable = true;
-  programs.zsh.enable = true;
+
+  programs.zsh = {
+    enable = true;
+    initContent = ''
+      bindkey -s ^f "tmux-sessionizer\n"
+    '';
+  };
+
   programs.neovim.enable = true;
   programs.wakeonlan.enable = true;
+
+  programs.tmux-sessionizer = {
+    enable = true;
+    searchDirs = [
+      "~/projects"
+    ];
+  };
 
   home.sessionVariables = {
     EDITOR = "nvim";
