@@ -21,7 +21,41 @@
         "type": "github"
       }
     },
+    "lidctl": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1787355068,
+        "narHash": "sha256-c157y0Go1Z9gyjEPAI6fPQZqFDNHDdL3fSKH7IGdlL4=",
+        "owner": "filipeom",
+        "repo": "lidctl",
+        "rev": "131638d63000ca03426b5602096eb78688aaffa3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "filipeom",
+        "repo": "lidctl",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1787204541,
+        "narHash": "sha256-OURZPknrTjQrlNyxPdqzyqmU/81Wes1CUP/Ft1Rv/YI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5880666fd9eb563038431edb35c2d0aa595884e6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1786711500,
         "narHash": "sha256-QvnceIGTBeDvDd9oCn+GvdsnkquliuwbVgpiRH68qaQ=",
@@ -40,7 +74,8 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "lidctl": "lidctl",
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },

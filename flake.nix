@@ -8,9 +8,11 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    lidctl.url = "github:filipeom/lidctl";
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, lidctl, ... }:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -25,6 +27,10 @@
         };
       };
     in {
+      packages.x86_64-linux = {
+        lidctl = lidctl.packages.${system}.default;
+      };
+
       homeConfigurations = {
         anchor-01 = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
@@ -47,7 +53,12 @@
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
-                home-manager.users.filipe = import ./hosts/helm/home.nix;
+                home-manager.users.filipe = {
+                  imports = [
+                    ./hosts/helm/home.nix
+                    lidctl.homeManagerModules.default
+                  ];
+                };
               }
           ];
         };

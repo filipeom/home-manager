@@ -196,6 +196,9 @@
 
     systemd.user.services.waybar = import ./waybar.nix { inherit config pkgs lib; };
 
+    # lidctl (clamshell/lid handling) ships its own home-manager module; it is
+    # imported from the lidctl flake input in flake.nix.
+
     services.hypridle = {
       enable = true;
       settings = {
