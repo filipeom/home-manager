@@ -45,6 +45,24 @@
   # Enable NetworkManager
   networking.networkmanager.enable = false;
 
+  # WireGuard VPN server configuration
+  networking.firewall.allowedUDPPorts = [ 51820 ];
+  boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
+
+  networking.wireguard.interfaces.wg0 = {
+    ips = [ "10.100.0.1/24" ];
+    listenPort = 51820;
+    privateKeyFile = "/var/lib/wireguard/private.key";
+
+    peers = [
+      {
+        # Windows Client
+        publicKey = "YOUR_WINDOWS_CLIENT_PUBLIC_KEY";
+        allowedIPs = [ "10.100.0.2/32" ];
+      }
+    ];
+  };
+
   virtualisation.docker.enable = false;
 
   virtualisation.podman = {
