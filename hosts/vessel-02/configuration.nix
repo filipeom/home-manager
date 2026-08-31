@@ -49,6 +49,9 @@
   networking.firewall.allowedUDPPorts = [ 51820 ];
   boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
 
+  networking.nat.enable = true;
+  networking.nat.externalInterface = "enp1s0";
+  networking.nat.internalInterfaces = [ "wg0" ];
   networking.wireguard.interfaces.wg0 = {
     ips = [ "10.100.0.1/24" ];
     listenPort = 51820;
@@ -57,7 +60,7 @@
     peers = [
       {
         # Windows Client
-        publicKey = "YOUR_WINDOWS_CLIENT_PUBLIC_KEY";
+        publicKey = "l6Oc7idr8xYutd5q8uCMgqFFqjS21vq2NctNDy3vMCE=";
         allowedIPs = [ "10.100.0.2/32" ];
       }
     ];
