@@ -91,8 +91,6 @@
     packages = with pkgs; [];
   };
 
-  security.pam.services.hyprlock.fprintAuth = true;
-
   # Annoying sudo password
   security.sudo.extraRules = [
     {
@@ -199,8 +197,6 @@
       STOP_CHARGE_THRESH_BAT0 = 80;
     };
   };
-
-  services.fprintd.enable = true;
 
   my.power-tune.enable = true;
 
