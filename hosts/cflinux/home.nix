@@ -9,7 +9,6 @@
     direnv
     rustup
     nodejs_26
-    opencode
   ];
 
   imports = [
@@ -65,8 +64,10 @@
 
   programs.opencode = {
     enable = true;
+    package = pkgs.writeShellScriptBin "opencode" ''
+      exec ${pkgs.nodejs_26}/bin/npx -y opencode-ai@latest "$@"
+    '';
     settings = {
-      model = "google/gemini-flash-latest";
       autoupdate = false;
       permission = "allow";
       lsp = true;

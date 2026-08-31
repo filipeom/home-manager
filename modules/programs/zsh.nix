@@ -16,6 +16,7 @@
       vi = "nvim";
       vim = "nvim";
       ls = "ls --color=auto --group-directories-first";
+      ip = "ip -color";
     };
   };
 }
