@@ -3,6 +3,8 @@ HOSTNAME=$(shell hostname)
 V01 = filipe@vessel-01.local
 V02 = filipe@vessel-02.local
 
+export NIX_SSHOPTS = -o ProxyJump=anchor-01.filipeom.dev
+
 default: update
 
 .PHONY: rebuild
