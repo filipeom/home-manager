@@ -105,8 +105,12 @@
 
   programs.opencode = {
     enable = true;
+    package = pkgs.writeShellScriptBin "opencode" ''
+      exec ${pkgs.nodejs_26}/bin/npx -y opencode-ai@latest "$@"
+    '';
     settings = {
       autoupdate = false;
+      permission = "allow";
     };
   };
 
