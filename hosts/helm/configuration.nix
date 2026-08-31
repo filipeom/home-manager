@@ -11,6 +11,7 @@
       ../../modules/services/power-tune.nix
     ];
 
+  hardware.i2c.enable = true;
   hardware.bluetooth.enable = true;
 
   # Swap for hibernation (S4)
