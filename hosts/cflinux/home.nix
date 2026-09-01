@@ -68,6 +68,7 @@
       exec ${pkgs.nodejs_26}/bin/npx -y opencode-ai@latest "$@"
     '';
     settings = {
+      model = "google/gemini-3.7-flash";
       autoupdate = false;
       permission = "allow";
       lsp = true;
