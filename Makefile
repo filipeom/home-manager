@@ -7,6 +7,11 @@ export NIX_SSHOPTS = -o ProxyJump=anchor-01.filipeom.dev
 
 default: update
 
+.PHONY: check
+check:
+	./scripts/check-host.sh $(V01)
+	./scripts/check-host.sh $(V02)
+
 .PHONY: rebuild
 rebuild:
 	@echo "Rebuilding $(HOSTNAME)..."
