@@ -121,7 +121,7 @@
     monitor = [
       "eDP-1,highres@highrr,0x0,1"
       # Fallback for any unexpected extra monitors
-      ",preferred,1920x0,auto"
+      ",highres@highrr,1920x0,auto"
     ];
 
     exec-once = [
